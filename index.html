@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>pink letter · for you 💌</title>
+
+  <!-- Tailwind + fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Quicksand:wght@300;400;600;700&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* reset — mobile first, soft pink memory */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      background: radial-gradient(circle at 40% 30%, #ffdbdf, #ffccd1, #ffc0c6);
+      transition: background 1.6s ease;
+    }
+
+    body.scroll-unlocked {
+      overflow-y: auto;
+      background: radial-gradient(circle at 70% 30%, #ffe3e5, #ffd5da, #ffcbd2);
+    }
+
+    .elegant-serif {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .handwritten {
+      font-family: 'Dancing Script', cursive;
+    }
+
+    /* ===== 3D GIFT — refined, with magical open ===== */
+    .gift-container {
+      perspective: 1400px;
+      cursor: pointer;
+      filter: drop-shadow(0 15px 20px rgba(200, 100, 120, 0.3));
+      transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .gift-container:active {
+      transform: scale(0.98);
+    }
+
+    .box-3d {
+      transform-style: preserve-3d;
+      transform: rotateX(6deg) rotateY(-12deg) rotateZ(1.5deg);
+      width: 180px;
+      height: 180px;
+      position: relative;
+    }
+
+    .box-lid {
+      position: absolute;
+      width: 100%;
+      height: 30px;
+      background: linear-gradient(145deg, #ffb0be, #ff7e96);
+      border-radius: 12px 12px 6px 6px;
+      top: -15px;
+      left: 0;
+      transform-origin: bottom center;
+      transform: rotateX(0deg) translateZ(18px);
+      box-shadow: 0 12px 20px rgba(255, 100, 130, 0.4);
+      border-bottom: 2px solid #ffe6ea;
+      transition: transform 0.7s cubic-bezier(0.34, 1.6, 0.64, 1.1);
+    }
+
+    .box-lid.lid-open-3d {
+      transform: rotateX(138deg) translateZ(18px) translateY(-26px) translateX(1px);
+      transition: transform 0.8s cubic-bezier(0.4, 1.4, 0.5, 1.1);
+    }
+
+    .box-body {
+      position: absolute;
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(145deg, #ff9bad, #ff6a84);
+      border-radius: 16px;
+      top: 15px;
+      left: 0;
+      transform-style: preserve-3d;
+      transform: translateZ(18px);
+      box-shadow: 0 22px 28px rgba(190, 70, 100, 0.4), inset 0 -5px 0 rgba(255, 210, 210, 0.7), inset 0 8px 14px #ffecf0;
+      border: 1px solid #ffd3da;
+    }
+
+    .ribbon-vertical {
+      position: absolute;
+      width: 22px;
+      height: 100%;
+      background: linear-gradient(90deg, #fff7fa, #ffdbe4, #fffafe);
+      left: 50%;
+      transform: translateX(-50%) skewX(-2deg);
+      box-shadow: inset -3px 0 6px rgba(255, 170, 180, 0.5), inset 3px 0 8px white;
+      border-left: 1px solid #ffe0e6;
+      border-right: 1px solid #ffaebe;
+    }
+    .ribbon-horizontal {
+      position: absolute;
+      height: 22px;
+      width: 100%;
+      background: linear-gradient(180deg, #fff5f8, #ffd8e2, #fff9fc);
+      top: 50%;
+      transform: translateY(-50%) skewY(-1.5deg);
+      box-shadow: inset 0 -4px 6px rgba(255, 170, 180, 0.4), inset 0 4px 8px white;
+      border-top: 1px solid #ffd2db;
+      border-bottom: 1px solid #ffa3b3;
+    }
+
+    .ribbon-bow {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      background: radial-gradient(circle at 35% 35%, #fffbfd, #ffbfcc);
+      border-radius: 50% 50% 0 50%;
+      top: -22px;
+      left: 50%;
+      transform: translateX(-50%) rotate(38deg);
+      box-shadow: 0 10px 16px rgba(255, 100, 130, 0.5);
+      border: 1.2px solid #fff6f7;
+    }
+    .ribbon-bow::after {
+      content: '';
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      background: radial-gradient(circle at 70% 30%, #fffbfd, #ffb2c2);
+      border-radius: 50% 50% 50% 0;
+      left: -22px;
+      top: 8px;
+      transform: rotate(68deg);
+      box-shadow: 0 10px 16px rgba(255, 100, 130, 0.4);
+      border: 1.2px solid #fff4f6;
+    }
+
+    .heart-tag {
+      position: absolute;
+      bottom: -14px;
+      right: -16px;
+      background: radial-gradient(circle at 60% 40%, #ff9eb2, #ff4665);
+      color: white;
+      font-size: 26px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 22px #ff6e8a, 0 0 0 4px rgba(255, 235, 240, 0.7);
+      border: 2px solid #ffe3ec;
+      animation: softBeat 2.2s infinite;
+    }
+
+    @keyframes softBeat {
+      0% { transform: scale(1); }
+      20% { transform: scale(1.1); box-shadow: 0 0 18px #ff5577; }
+      40% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* ===== SURPRISE TEXT — STAYS FOREVER ===== */
+    #valentineMessage {
+      margin-top: 2.5rem;
+      transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.34, 1.7, 0.64, 1.2);
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    #valentineMessage.show-message {
+      opacity: 1;
+      transform: scale(1);
+    }
+    #valentineMessage h1 {
+      text-shadow: 0 0 20px #ff90a5, 0 0 60px #ffb1c2;
+      animation: gentlePop 0.6s 0.2s both;
+    }
+    @keyframes gentlePop {
+      0% { letter-spacing: -2px; filter: blur(2px); }
+      100% { letter-spacing: normal; filter: blur(0); }
+    }
+
+    /* ===== BLOOMING FLOWER BACKGROUND PER SECTION ===== */
+    .section-bloom {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.35;
+      transition: opacity 0.8s;
+    }
+    .bloom-canvas {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(255,200,210,0) 10%, rgba(255,150,170,0) 70%);
+    }
+
+    /* ===== PETAL RAIN — intimate ===== */
+    .petal {
+      position: fixed;
+      top: -30px;
+      width: 18px;
+      height: 22px;
+      background: radial-gradient(circle at 40% 30%, #ffe0e6, #ff8fa2);
+      border-radius: 90% 0 70% 30%;
+      transform: rotate(30deg);
+      opacity: 0.55;
+      animation: petalFloat linear infinite;
+      pointer-events: none;
+      z-index: 300;
+      box-shadow: 0 0 22px rgba(255, 140, 170, 0.6);
+      border: 1px solid rgba(255, 230, 240, 0.3);
+    }
+
+    @keyframes petalFloat {
+      0% { transform: translateY(0) rotate(30deg) translateX(0); opacity: 0.6; }
+      50% { transform: translateY(55vh) rotate(200deg) translateX(18px); opacity: 0.3; }
+      100% { transform: translateY(110vh) rotate(380deg) translateX(-12px); opacity: 0.1; }
+    }
+
+    /* ===== SCROLL HINT ===== */
+    .scroll-hint {
+      position: fixed;
+      bottom: 28px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: fit-content;
+      background: rgba(255, 235, 240, 0.8);
+      backdrop-filter: blur(18px);
+      border: 1px solid #ffb6c1;
+      color: #8f4355;
+      padding: 10px 28px;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      box-shadow: 0 0 40px rgba(255, 130, 160, 0.7);
+      z-index: 250;
+      transition: opacity 1s, transform 0.8s, letter-spacing 0.4s;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .scroll-hint.hidden {
+      opacity: 0;
+      transform: translateY(30px);
+      pointer-events: none;
+    }
+
+    /* ===== LETTER STYLES ===== */
+    .letter-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 1.2rem;
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      z-index: 20;
+    }
+
+    .letter-message {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      line-height: 1.4;
+      color: #6a2c3a;
+      text-shadow: 0 2px 12px #ffc0cb, 0 0 30px #ffb6b6;
+      max-width: 100%;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      padding: 0 0.2rem;
+    }
+
+    .letter-sub {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.1rem;
+      color: #934153;
+      margin-top: 1rem;
+      font-weight: 500;
+      letter-spacing: 3px;
+      border-bottom: 1.8px solid #ff9faf;
+      display: inline-block;
+      padding-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .whisper-couplet {
+      font-family: 'Dancing Script', cursive;
+      color: #8a3a48;
+      font-size: 1.2rem;
+      margin-top: 1.6rem;
+      opacity: 0.85;
+      border-top: 1px dashed #ffa7b6;
+      padding-top: 1rem;
+      width: 80%;
+    }
+
+    /* reveal animations */
+    .section-2 .letter-message,
+    .section-3 .letter-message,
+    .section-4 .letter-message,
+    .section-5 .letter-message,
+    .section-2 .letter-sub,
+    .section-3 .letter-sub,
+    .section-4 .letter-sub,
+    .section-5 .letter-sub,
+    .whisper-couplet,
+    .section-6 .glow-photo-frame,
+    .section-6 #herName,
+    .section-6 .elegant-caption {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+    }
+    .section-2 .letter-sub,
+    .section-3 .letter-sub,
+    .section-4 .letter-sub,
+    .section-5 .letter-sub {
+      transition-delay: 0.1s;
+    }
+    .whisper-couplet {
+      transition-delay: 0.2s;
+    }
+    .section-6 #herName {
+      transition-delay: 0.2s;
+    }
+    .section-6 .elegant-caption {
+      transition-delay: 0.3s;
+    }
+
+    .show {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+
+    /* photo frame */
+    .section-6 .glow-photo-frame {
+      transform: scale(0.8) rotate(-6deg);
+      border-radius: 24px;
+      box-shadow: 0 20px 30px -6px rgba(130, 50, 70, 0.4), 0 0 0 5px #ffe4e8, 0 0 0 12px #ffd2da, 0 0 50px #ffa5b6;
+      max-width: 85vw;
+    }
+    .section-6 .glow-photo-frame.show {
+      transform: scale(1) rotate(1.5deg);
+    }
+
+   .name-elegant {
+  background: linear-gradient(145deg, #ff8da1, #ff4d6a, #ff7a94);
+  -webkit-background-clip: text; /* correct spelling */
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px #ff879b, 0 0 50px #ff607b;
+  letter-spacing: 6px;
+}
+
+
+    /* floating symbols */
+    .floating-symbol {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0.2;
+      animation: drift 10s infinite alternate;
+    }
+    @keyframes drift {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(-20px) rotate(8deg); }
+    }
+
+    /* snap */
+    .snap-y {
+      scroll-snap-type: y mandatory;
+    }
+    section {
+      scroll-snap-align: start;
+      background: transparent;
+      position: relative;
+      z-index: 15;
+    }
+
+    .tap-label {
+      display: inline-block;
+      margin-top: 1.2rem;
+      font-size: 0.7rem;
+      letter-spacing: 5px;
+      background: rgba(255, 230, 235, 0.6);
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      backdrop-filter: blur(6px);
+      border: 1px solid #ffc2ce;
+    }
+  </style>
+</head>
+<body id="mainBody" class="text-[#3e262a] snap-y snap-mandatory">
+
+  <!-- 🌸 FLOATING BLOOM CANVASES (one per section, dynamically placed) -->
+  <div id="bloomBackgrounds" class="fixed inset-0 w-full h-full pointer-events-none z-5" style="z-index: 2;"></div>
+
+  <!-- 🌸 MAIN BLOOMING FLOWER (stem grows) -->
+<!-- 🌸 MAIN BLOOMING FLOWER (static full size) -->
+<!-- LEFT BLOOMING FLOWER -->
+<svg id="bloomFlowerLeft" 
+     class="fixed left-1/8 bottom-0 pointer-events-none z-0"
+     style="height: 70vh; width: auto; filter: drop-shadow(0 0 12px #ff7a97);"
+     viewBox="0 0 240 1200" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="stemPinkLeft" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb3c6" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ff6a8a" stop-opacity="0.4"/>
+    </linearGradient>
+
+    <radialGradient id="petalGradLeft" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff809a" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ffb6c9" stop-opacity="0.35"/>
+    </radialGradient>
+  </defs>
+
+  <path d="M120,1150 L120,160 Q112,70 160,45 Q200,22 155,10 Q115,-4 80,28 Q55,58 92,92 Q126,124 112,190 Q98,260 120,340"
+        stroke="url(#stemPinkLeft)" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- blooms -->
+  <circle cx="122" cy="320" r="32" fill="url(#petalGradLeft)"/>
+  <circle cx="90" cy="380" r="24" fill="#ffa7b9" opacity="0.3"/>
+  <circle cx="170" cy="250" r="28" fill="#ff94aa" opacity="0.3"/>
+  <circle cx="144" cy="170" r="26" fill="#ffb6c9" opacity="0.25"/>
+</svg>
+
+<!-- RIGHT SHORTER BLOOMING FLOWER -->
+<svg id="bloomFlowerRight" 
+     class="fixed right-1/8 bottom-0 pointer-events-none z-0"
+     style="height: 50vh; width: auto; filter: drop-shadow(0 0 10px #ff7a97);"
+     viewBox="0 0 240 1200" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="stemPinkRight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffb3c6" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ff6a8a" stop-opacity="0.35"/>
+    </linearGradient>
+
+    <radialGradient id="petalGradRight" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff809a" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ffb6c9" stop-opacity="0.3"/>
+    </radialGradient>
+  </defs>
+
+  <path d="M120,1150 L120,200 Q110,120 150,90 Q180,70 150,60 Q120,50 100,90 Q70,130 95,160 Q110,190 105,240"
+        stroke="url(#stemPinkRight)" stroke-width="14" fill="none" stroke-linecap="round" opacity="0.4"/>
+
+  <!-- blooms -->
+  <circle cx="120" cy="240" r="24" fill="url(#petalGradRight)"/>
+  <circle cx="90" cy="280" r="18" fill="#ffa7b9" opacity="0.25"/>
+  <circle cx="160" cy="180" r="20" fill="#ff94aa" opacity="0.25"/>
+</svg>
+
+
+  <!-- stem -->
+  <path d="M120,1150 L120,160 Q112,70 160,45 Q200,22 155,10 Q115,-4 80,28 Q55,58 92,92 Q126,124 112,190 Q98,260 120,340"
+        stroke="url(#stemPink)" stroke-width="18" fill="none" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- blooms / flowers -->
+  <circle cx="122" cy="320" r="32" fill="url(#petalGrad1)"/>
+  <circle cx="90" cy="380" r="24" fill="#ffa7b9"/>
+  <circle cx="170" cy="250" r="28" fill="#ff94aa"/>
+  <circle cx="144" cy="170" r="26" fill="#ffb6c9"/>
+  <circle cx="102" cy="80" r="30" fill="#ffa0b2"/>
+  <circle cx="68" cy="130" r="20" fill="#ffd0dc"/>
+  <circle cx="192" cy="110" r="22" fill="#ffaec2"/>
+</svg>
+
+
+
+  <!-- 💌 SCROLL HINT -->
+  <div id="scrollHint" class="scroll-hint hidden opacity-0">
+    ↓ scroll — flower blooms ↓
+  </div>
+
+  <!-- 🎁 SECTION 1 – GIFT -->
+  <section class="h-screen flex flex-col justify-center items-center text-center px-5 snap-start relative z-50">
+    <div class="absolute left-2 top-2 text-5xl opacity-10 floating-symbol">🌸</div>
+    <div class="absolute right-4 bottom-20 text-5xl opacity-10 floating-symbol">💗</div>
+    
+    <h1 class="text-sm tracking-[0.45em] uppercase text-[#8f4152] mb-8 z-50 bg-white/30 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/50 shadow-md">
+      for you, always
+    </h1>
+
+    <!-- GIFT 3D -->
+    <div id="giftContainer" class="gift-container relative z-50">
+      <div class="box-3d" id="box3d">
+        <div id="boxLid" class="box-lid">
+          <div class="ribbon-bow"></div>
+        </div>
+        <div class="box-body">
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+          <div class="heart-tag">💗</div>
+        </div>
+      </div>
+      <span class="tap-label text-[#9b4b5a] border-pink-200 shadow-sm">tap to open</span>
+    </div>
+
+    <!-- 💖 VALENTINE MESSAGE — STAYS VISIBLE AFTER OPENING -->
+    <div id="valentineMessage" class="mt-14">
+      <h1 class="elegant-serif text-4xl md:text-5xl text-[#9a3e52] drop-shadow-2xl" style="text-shadow:0 0 30px #ff90a5, 0 0 70px #ffb1c2;">
+        Happy Valentine’s Day
+      </h1>
+      <div class="handwritten text-2xl mt-2 text-[#ad4c60] opacity-80">my sweetheart</div>
+    </div>
+  </section>
+
+ <!-- 💕 SECTION 2 – thank you -->
+<section class="section-2 letter-section h-screen snap-start relative flex flex-col items-center justify-center text-center px-4">
+  <div class="floating-symbol absolute text-4xl md:text-5xl opacity-30 animate-float" style="top:15%; left:6%;">✨</div>
+  <div class="floating-symbol absolute text-3xl md:text-4xl opacity-20 animate-float-delay" style="bottom:20%; right:10%;">🌸</div>
+  
+  <div class="relative">
+    <!-- Decorative line above -->
+    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+    
+    <div class="letter-message text-3xl md:text-5xl lg:text-6xl elegant-serif text-[#4a3b3d] leading-relaxed">
+      thank you for being
+      <br>the most beautiful soul
+    </div>
+    
+    <div class="letter-sub mt-6 text-xl md:text-2xl handwritten text-[#a55768]">
+      i've ever met
+    </div>
+    
+    <div class="whisper-couplet mt-8 text-sm md:text-base text-[#a55768]/70 italic tracking-wide">
+      — you make everything softer —
+    </div>
+    
+    <!-- Decorative line below -->
+    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+  </div>
+  
+  <!-- Simple heart accent -->
+  <div class="absolute bottom-12 right-12 text-2xl opacity-20 animate-pulse">💕</div>
+</section>
+
+<!-- 💕 SECTION 3 – proud of you -->
+<section class="section-3 letter-section h-screen snap-start relative flex flex-col items-center justify-center text-center px-4">
+  <div class="floating-symbol absolute text-4xl md:text-5xl opacity-30 animate-float" style="bottom:18%; right:7%;">🌙</div>
+  <div class="floating-symbol absolute text-3xl md:text-4xl opacity-20 animate-float-delay" style="top:20%; left:8%;">⭐</div>
+  
+  <div class="relative">
+    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+    
+    <div class="letter-message text-3xl md:text-5xl lg:text-6xl elegant-serif text-[#4a3b3d] leading-relaxed">
+      i'm always proud of you
+    </div>
+    
+    <div class="letter-sub mt-6 text-xl md:text-2xl handwritten text-[#a55768]">
+      every single day
+    </div>
+    
+    <div class="whisper-couplet mt-8 text-sm md:text-base text-[#a55768]/70 italic tracking-wide">
+      your light reaches so far
+    </div>
+    
+    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+  </div>
+  
+  <div class="absolute top-12 left-12 text-2xl opacity-20 animate-pulse">💫</div>
+</section>
+
+<!-- 💕 SECTION 4 – strength & kindness -->
+<section class="section-4 letter-section h-screen snap-start relative flex flex-col items-center justify-center text-center px-4">
+  <!-- floating symbols -->
+  <div class="floating-symbol absolute text-4xl md:text-5xl opacity-30 animate-float" style="top:12%; right:12%;">💖</div>
+  <div class="floating-symbol absolute text-3xl md:text-4xl opacity-20 animate-float-delay" style="bottom:15%; left:8%;">🌸</div>
+  
+  <div class="relative">
+    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+    
+    <div class="letter-message text-3xl md:text-5xl lg:text-6xl elegant-serif text-[#4a3b3d] leading-relaxed">
+      your strength and kindness
+      <br>inspire me to be better
+    </div>
+    
+    <div class="letter-sub mt-6 text-xl md:text-2xl handwritten text-[#a55768]">
+      always have, always will
+    </div>
+    
+    <div class="whisper-couplet mt-8 text-sm md:text-base text-[#a55768]/70 italic tracking-wide">
+      you change my tide
+    </div>
+    
+    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+  </div>
+  
+  <!-- extra floating heart/flower symbols -->
+  <div class="absolute bottom-16 left-16 text-2xl opacity-20 animate-pulse">💘</div>
+  <div class="absolute bottom-10 right-20 text-2xl opacity-25 animate-pulse">🌺</div>
+</section>
+
+
+<!-- 💕 SECTION 5 – you are special -->
+<section class="section-5 letter-section h-screen snap-start relative flex flex-col items-center justify-center text-center px-4">
+  <div class="floating-symbol absolute text-4xl md:text-5xl opacity-30 animate-float" style="top:20%; left:10%;">🌟</div>
+  <div class="floating-symbol absolute text-3xl md:text-4xl opacity-20 animate-float-delay" style="bottom:18%; right:12%;">💫</div>
+  
+  <div class="relative">
+    <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 w-16 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+    
+    <div class="letter-message text-3xl md:text-5xl lg:text-6xl elegant-serif text-[#4a3b3d] leading-relaxed">
+      i hope you always remember
+      <br>how special you are
+    </div>
+    
+    <div class="letter-sub mt-6 text-xl md:text-2xl handwritten text-[#a55768]">
+      you're everything
+    </div>
+    
+    <div class="whisper-couplet mt-8 text-sm md:text-base text-[#a55768]/70 italic tracking-wide">
+      the world is lucky to have you
+    </div>
+    
+    <div class="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-[#a55768]/30 to-transparent"></div>
+  </div>
+  
+  <div class="absolute top-16 right-16 text-2xl opacity-20 animate-pulse">❤️</div>
+</section>
+
+<style>
+/* Keep original fonts and color theme */
+.elegant-serif {
+  font-family: 'Playfair Display', 'Times New Roman', serif;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+.handwritten {
+  font-family: 'Caveat', 'Bradley Hand', cursive;
+  font-weight: 400;
+}
+
+/* Floating animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes float-delay {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay {
+  animation: float 6s ease-in-out 3s infinite;
+}
+
+/* Smooth transitions */
+.letter-message, .letter-sub, .whisper-couplet {
+  transition: all 0.3s ease;
+}
+
+.letter-message:hover {
+  transform: scale(1.01);
+  color: #a55768;
+}
+
+/* Original background preserved */
+.section-2, .section-3, .section-4, .section-5 {
+  background: transparent;
+}
+</style>
+
+  <!-- 📸 SECTION 6 – HER PHOTO & NAME -->
+<section class="section-6 h-screen flex flex-col items-center justify-center text-center snap-start relative px-3">
+    <!-- Minimal floating elements -->
+    <div class="absolute text-4xl md:text-5xl opacity-30 animate-float" style="top:7%; right:12%;">🌷</div>
+    <div class="absolute text-4xl md:text-5xl opacity-30 animate-float-delay"
+     style="top:64%; left:15%; pointer-events:none; z-index:10;">
+  🦋
+</div>
+
+    
+    <!-- Simple photo frame -->
+    <div class="relative w-64 md:w-72 group">
+        <div class="rounded-2xl overflow-hidden border-4 border-white/60 shadow-2xl transition-all duration-500 group-hover:shadow-3xl group-hover:border-white/80">
+            <img src="jai.jfif" 
+                 alt="her portrait" 
+                 class="w-full h-72 md:h-80 object-cover transition-transform duration-700 group-hover:scale-105"
+                 id="herPhoto">
+        </div>
+        <!-- Soft glow -->
+        <div class="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#a55768]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    </div>
+    
+    <!-- Name with original styling -->
+    <h2 id="herName" 
+        class="mt-8 text-3xl md:text-4xl elegant-serif name-elegant px-5 py-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/40">
+        Jai Jai
+    </h2>
+    
+    <!-- Valentine message with original color -->
+    <p class="text-[#a55768] mt-4 text-base tracking-widest elegant-caption handwritten">
+        Happy Valentine's Day
+    </p>
+    
+    <!-- Simple hearts as original -->
+    <div class="absolute bottom-16 right-8 text-5xl opacity-20 animate-pulse">💕</div>
+    <div class="absolute bottom-20 left-8 handwritten text-xl text-rose-400/70 italic">
+        yours,
+    </div>
+</section>
+
+<style>
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes float-delay {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay {
+    animation: float 6s ease-in-out 3s infinite;
+}
+
+/* Original font styles preserved */
+.elegant-serif {
+    font-family: 'Playfair Display', 'Times New Roman', serif;
+    letter-spacing: 0.05em;
+}
+
+.handwritten {
+    font-family: 'Caveat', 'Bradley Hand', cursive;
+}
+
+.name-elegant {
+    font-weight: 600;
+    color: #4a3b3d;
+}
+
+.elegant-caption {
+    font-weight: 300;
+    text-transform: uppercase;
+}
+</style>
+
+<script>
+(function() {
+  const body = document.getElementById('mainBody');
+  const giftContainer = document.getElementById('giftContainer');
+  const boxLid = document.getElementById('boxLid');
+  const valentineDiv = document.getElementById('valentineMessage');
+  const bloomingFlower = document.getElementById('bloomingFlower');
+  const scrollHint = document.getElementById('scrollHint');
+
+  // pre-hide Valentine message using only CSS classes
+  valentineDiv.classList.remove('show-message'); // ensure not showing initially
+
+  // 🎁 GIFT OPENING
+  giftContainer.addEventListener('click', function() {
+    if (boxLid.classList.contains('lid-open-3d')) return; // already opened
+
+    // 1️⃣ open lid
+    boxLid.classList.add('lid-open-3d');
+
+    // 2️⃣ show Valentine message
+    valentineDiv.classList.add('show-message');
+
+    // 3️⃣ confetti explosion
+    for (let i = 0; i < 80; i++) {
+      let conf = document.createElement('div');
+      conf.classList.add('petal');
+      conf.style.position = 'fixed';
+      conf.style.width = (8 + Math.random() * 18) + 'px';
+      conf.style.height = (10 + Math.random() * 18) + 'px';
+      conf.style.background = `radial-gradient(circle at 30% 30%, #ffe8f0, #ff6b8b)`;
+      conf.style.left = Math.random() * 100 + '%';
+      conf.style.top = '40%';
+      conf.style.opacity = '0.9';
+      conf.style.zIndex = '999';
+      conf.style.boxShadow = '0 0 25px #ffa5b5';
+      conf.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(conf);
+
+      let angle = Math.random() * Math.PI * 2;
+      let velocity = 7 + Math.random() * 15;
+      let x = parseFloat(conf.style.left);
+      let y = 40;
+      let vx = Math.cos(angle) * velocity;
+      let vy = Math.sin(angle) * velocity - 12;
+      let gravity = 0.4;
+
+      let interval = setInterval(() => {
+        vx *= 0.98;
+        vy += gravity;
+        x += vx * 0.1;
+        y += vy * 0.1;
+        conf.style.left = x + '%';
+        conf.style.top = y + '%';
+        conf.style.opacity -= 0.008;
+        if (y > 110 || conf.style.opacity <= 0.02) {
+          clearInterval(interval);
+          conf.remove();
+        }
+      }, 20);
+    }
+
+    // 4️⃣ unlock scrolling & change background
+    body.classList.add('scroll-unlocked');
+
+    // 5️⃣ show scroll hint
+    scrollHint.classList.remove('hidden');
+    setTimeout(() => {
+      scrollHint.style.opacity = '1';
+      scrollHint.style.transform = 'translateY(0)';
+    }, 30);
+
+    // 6️⃣ create falling petals
+    for (let i = 0; i < 42; i++) {
+      let petal = document.createElement('div');
+      petal.classList.add('petal');
+      petal.style.left = Math.random() * 100 + '%';
+      petal.style.animationDuration = (6 + Math.random() * 14) + 's';
+      petal.style.animationDelay = Math.random() * 7 + 's';
+      petal.style.width = (12 + Math.random() * 16) + 'px';
+      petal.style.height = (14 + Math.random() * 18) + 'px';
+      petal.style.background = `radial-gradient(circle at 30% 30%, #ffe2ec, #ff889e)`;
+      document.body.appendChild(petal);
+    }
+
+    // 7️⃣ auto-hide scroll hint after 5.5s
+    setTimeout(() => {
+      scrollHint.classList.add('hidden');
+    }, 5500);
+  });
+
+  // 🌸 BLOOM FLOWER — grows on scroll
+  function bloomOnScroll() {
+    if (!body.classList.contains('scroll-unlocked')) return;
+    const scrollY = window.scrollY;
+    const winH = window.innerHeight;
+    const docH = document.documentElement.scrollHeight - winH;
+    if (docH <= 0) return;
+
+    let percent = Math.min(1, Math.max(0, scrollY / docH));
+    let scale = 0.06 + (percent * 1.0);
+    bloomingFlower.style.transform = `scaleY(${scale})`;
+
+    let glow = 18 + (percent * 45);
+    bloomingFlower.style.filter = `drop-shadow(0 0 ${glow}px #ff7a97) drop-shadow(0 0 ${glow*0.6}px #ffa5b5)`;
+  }
+  window.addEventListener('scroll', bloomOnScroll, { passive: true });
+
+  // 🌹 REVEAL LETTERS ON SCROLL
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('show');
+    });
+  }, { threshold: 0.3, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.section-2 .letter-message, .section-2 .letter-sub, .section-2 .whisper-couplet, .section-3 .letter-message, .section-3 .letter-sub, .section-3 .whisper-couplet, .section-4 .letter-message, .section-4 .letter-sub, .section-4 .whisper-couplet, .section-5 .letter-message, .section-5 .letter-sub, .section-5 .whisper-couplet, .section-6 .glow-photo-frame, .section-6 #herName, .section-6 .elegant-caption')
+    .forEach(el => revealObserver.observe(el));
+
+  // 🌸 CREATE BLOOMS PER SECTION
+  function createSectionBlooms() {
+    const bloomContainer = document.getElementById('bloomBackgrounds');
+    bloomContainer.innerHTML = '';
+    const sections = document.querySelectorAll('section');
+    const colors = ['rgba(255,150,180,0.2)', 'rgba(255,120,150,0.15)', 'rgba(255,180,190,0.25)', 'rgba(245,160,180,0.2)', 'rgba(255,140,170,0.2)', 'rgba(255,200,200,0.2)'];
+
+    sections.forEach((_, index) => {
+      let bloomDiv = document.createElement('div');
+      bloomDiv.className = 'absolute inset-0 w-full h-full pointer-events-none';
+      bloomDiv.style.background = `radial-gradient(circle at ${20 + index * 15}% ${40 + (index%3)*20}%, ${colors[index % colors.length]} 0%, transparent 70%)`;
+      bloomDiv.style.opacity = '0';
+      bloomDiv.style.transition = 'opacity 0.8s ease';
+      bloomDiv.dataset.section = index;
+      bloomContainer.appendChild(bloomDiv);
+    });
+
+    const bloomObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const sectionIndex = Array.from(sections).indexOf(entry.target);
+        const bloomDivs = bloomContainer.children;
+        if (entry.isIntersecting) {
+          Array.from(bloomDivs).forEach(div => div.style.opacity = '0');
+          if (bloomDivs[sectionIndex]) bloomDivs[sectionIndex].style.opacity = '0.9';
+        }
+      });
+    }, { threshold: 0.4 });
+
+    sections.forEach(section => bloomObserver.observe(section));
+  }
+
+  window.addEventListener('load', createSectionBlooms);
+})();
+</script>
+
+
+  <!-- 💘 TO PERSONALIZE (mobile ready):
+    - replace #herPhoto src with her image
+    - set #herName innerText to her name
+  -->
+</body>
+</html>

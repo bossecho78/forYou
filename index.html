@@ -831,47 +831,43 @@
       scrollHint.style.transform = 'translateY(0)';
     }, 30);
 
-    // 6️⃣ create falling petals
-// 6️⃣ create falling petals — smooth version
-function createPetal() {
-  const petal = document.createElement('div');
+// 🌸 CREATE FALLING PETALS
+for (let i = 0; i < 42; i++) {
+  let petal = document.createElement('div');
   petal.classList.add('petal');
-
-  // size and color
-  const w = 12 + Math.random() * 16;
-  const h = 14 + Math.random() * 18;
-  petal.style.width = w + 'px';
-  petal.style.height = h + 'px';
-  petal.style.background = `radial-gradient(circle at 30% 30%, #ffe2ec, #ff889e)`;
   petal.style.position = 'fixed';
-  petal.style.top = '0';
-  petal.style.left = '50%';
   petal.style.zIndex = '999';
   petal.style.pointerEvents = 'none';
+  petal.style.width = (12 + Math.random() * 16) + 'px';
+  petal.style.height = (14 + Math.random() * 18) + 'px';
+  petal.style.background = `radial-gradient(circle at 30% 30%, #ffe2ec, #ff889e)`;
+  petal.style.top = '0';
+  petal.style.left = '0';
   document.body.appendChild(petal);
 
-  // animation data
-  let x = Math.random() * window.innerWidth;
-  let y = -h;
-  let rot = Math.random() * 360;
-  let vx = (Math.random() - 0.5) * 1.5; // horizontal drift
-  let vy = 1 + Math.random() * 2; // falling speed
-  let vr = (Math.random() - 0.5) * 5; // rotation speed
+  let x = Math.random() * window.innerWidth;   // horizontal start
+  let y = Math.random() * -200;               // start slightly above viewport
+  let rot = Math.random() * 360;              // initial rotation
+  let drift = (Math.random() - 0.5) * 2;      // horizontal drift per frame
+  let speed = 1 + Math.random() * 2;          // vertical speed
 
-  function animate() {
-    x += vx;
-    y += vy;
-    rot += vr;
+  function animatePetal() {
+    y += speed;
+    x += drift;
+    rot += (Math.random() - 0.5) * 2; // slow rotation
     petal.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg)`;
-    if (y < window.innerHeight + h) {
-      requestAnimationFrame(animate);
+    petal.style.opacity = 1 - y / (window.innerHeight + 200);
+
+    if (y < window.innerHeight + 200) {
+      requestAnimationFrame(animatePetal);
     } else {
       petal.remove();
     }
   }
 
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animatePetal);
 }
+
 
 // spawn multiple petals staggered
 for (let i = 0; i < 42; i++) {
@@ -953,3 +949,4 @@ for (let i = 0; i < 42; i++) {
   -->
 </body>
 </html>
+

@@ -205,21 +205,21 @@
     }
 
     /* ===== PETAL RAIN — intimate ===== */
-    .petal {
-      position: fixed;
-      top: -30px;
-      width: 18px;
-      height: 22px;
-      background: radial-gradient(circle at 40% 30%, #ffe0e6, #ff8fa2);
-      border-radius: 90% 0 70% 30%;
-      transform: rotate(30deg);
-      opacity: 0.55;
-      animation: petalFloat linear infinite;
-      pointer-events: none;
-      z-index: 300;
-      box-shadow: 0 0 22px rgba(255, 140, 170, 0.6);
-      border: 1px solid rgba(255, 230, 240, 0.3);
-    }
+ .petal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 20px;
+  border-radius: 90% 0 70% 30%;
+  background: radial-gradient(circle at 40% 30%, #ffe0e6, #ff8fa2);
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 999;
+  box-shadow: 0 0 15px rgba(255, 140, 170, 0.6);
+  will-change: transform, opacity; /* optimize for GPU */
+}
+
 
     @keyframes petalFloat {
       0% { transform: translateY(0) rotate(30deg) translateX(0); opacity: 0.6; }
@@ -832,17 +832,51 @@
     }, 30);
 
     // 6️⃣ create falling petals
-    for (let i = 0; i < 42; i++) {
-      let petal = document.createElement('div');
-      petal.classList.add('petal');
-      petal.style.left = Math.random() * 100 + '%';
-      petal.style.animationDuration = (6 + Math.random() * 14) + 's';
-      petal.style.animationDelay = Math.random() * 7 + 's';
-      petal.style.width = (12 + Math.random() * 16) + 'px';
-      petal.style.height = (14 + Math.random() * 18) + 'px';
-      petal.style.background = `radial-gradient(circle at 30% 30%, #ffe2ec, #ff889e)`;
-      document.body.appendChild(petal);
+// 6️⃣ create falling petals — smooth version
+function createPetal() {
+  const petal = document.createElement('div');
+  petal.classList.add('petal');
+
+  // size and color
+  const w = 12 + Math.random() * 16;
+  const h = 14 + Math.random() * 18;
+  petal.style.width = w + 'px';
+  petal.style.height = h + 'px';
+  petal.style.background = `radial-gradient(circle at 30% 30%, #ffe2ec, #ff889e)`;
+  petal.style.position = 'fixed';
+  petal.style.top = '0';
+  petal.style.left = '50%';
+  petal.style.zIndex = '999';
+  petal.style.pointerEvents = 'none';
+  document.body.appendChild(petal);
+
+  // animation data
+  let x = Math.random() * window.innerWidth;
+  let y = -h;
+  let rot = Math.random() * 360;
+  let vx = (Math.random() - 0.5) * 1.5; // horizontal drift
+  let vy = 1 + Math.random() * 2; // falling speed
+  let vr = (Math.random() - 0.5) * 5; // rotation speed
+
+  function animate() {
+    x += vx;
+    y += vy;
+    rot += vr;
+    petal.style.transform = `translate3d(${x}px, ${y}px, 0) rotate(${rot}deg)`;
+    if (y < window.innerHeight + h) {
+      requestAnimationFrame(animate);
+    } else {
+      petal.remove();
     }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+// spawn multiple petals staggered
+for (let i = 0; i < 42; i++) {
+  setTimeout(createPetal, i * 150);
+}
 
     // 7️⃣ auto-hide scroll hint after 5.5s
     setTimeout(() => {

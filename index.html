@@ -760,6 +760,21 @@
 }
 </style>
 
+    <audio id="bgMusic" loop>
+  <source src="isalang.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const gift = document.getElementById("giftContainer");
+  const music = document.getElementById("bgMusic");
+
+  gift.addEventListener("click", () => {
+   music.currentTime = 6;   // ✅ skip first 5 seconds
+    music.volume = 0.35;   // soft romantic volume
+    music.play();
+  }, { once: true }); // plays only first time opened
+</script>
+
 <script>
 (function() {
   const body = document.getElementById('mainBody');
@@ -949,4 +964,5 @@ for (let i = 0; i < 42; i++) {
   -->
 </body>
 </html>
+
 

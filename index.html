@@ -403,6 +403,20 @@
 </head>
 <body id="mainBody" class="text-[#3e262a] snap-y snap-mandatory">
 
+  <div id="nowPlaying"
+     class="fixed top-4 left-4 z-[999]
+            px-5 py-2.5 rounded-full
+            bg-gradient-to-r from-white/50 to-pink-100/40
+            backdrop-blur-md
+            text-[#9b4b5a] text-sm tracking-wide
+            shadow-xl border border-white/60
+
+            transition-all duration-500 ease-out
+            hover:scale-105">
+  🎵 Not playing
+</div>
+
+
   <!-- 🌸 FLOATING BLOOM CANVASES (one per section, dynamically placed) -->
   <div id="bloomBackgrounds" class="fixed inset-0 w-full h-full pointer-events-none z-5" style="z-index: 2;"></div>
 
@@ -767,13 +781,22 @@
 <script>
   const gift = document.getElementById("giftContainer");
   const music = document.getElementById("bgMusic");
+  const nowPlaying = document.getElementById("nowPlaying");
 
   gift.addEventListener("click", () => {
-   music.currentTime = 6;   // ✅ skip first 5 seconds
-    music.volume = 0.35;   // soft romantic volume
+    music.currentTime = 5;
+    music.volume = 0.35;
     music.play();
-  }, { once: true }); // plays only first time opened
+
+    nowPlaying.style.opacity = "0"; // fade out first
+
+    setTimeout(() => {
+      nowPlaying.innerHTML = "🎵 Now Playing: Your Song ❤️";
+      nowPlaying.style.opacity = "1"; // fade back in
+    }, 250);
+  }, { once: true });
 </script>
+
 
 <script>
 (function() {
@@ -964,5 +987,6 @@ for (let i = 0; i < 42; i++) {
   -->
 </body>
 </html>
+
 
 

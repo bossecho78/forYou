@@ -694,54 +694,104 @@
 }
 </style>
 
-  <!-- 📸 SECTION 6 – HER PHOTO & NAME -->
-<section class="section-6 h-screen flex flex-col items-center justify-center text-center snap-start relative px-3">
-    <!-- Minimal floating elements -->
-    <div class="absolute text-4xl md:text-5xl opacity-30 animate-float" style="top:7%; right:12%;">🌷</div>
-    <div class="absolute text-4xl md:text-5xl opacity-30 animate-float-delay"
-     style="top:64%; left:15%; pointer-events:none; z-index:10;">
-  🦋
-</div>
+<!-- 👑 SECTION 6 – ROYAL PORTRAIT (LIGHT CINEMATIC VERSION) -->
+<section class="section-6 h-screen flex flex-col items-center justify-center 
+                text-center snap-start relative px-4 overflow-hidden">
 
-    
-    <!-- Simple photo frame -->
-    <div class="relative w-64 md:w-72 group">
-        <div class="rounded-2xl overflow-hidden border-4 border-white/60 shadow-2xl transition-all duration-500 group-hover:shadow-3xl group-hover:border-white/80">
-            <img src="jai.jfif" 
-                 alt="her portrait" 
-                 class="w-full h-72 md:h-80 object-cover transition-transform duration-700 group-hover:scale-105"
-                 id="herPhoto">
+    <!-- Soft Romantic Background -->
+    <div class="absolute inset-0 bg-gradient-to-br 
+                from-rose-100 via-[#fdf2f4] to-rose-200 -z-20"></div>
+
+    <!-- Warm Glow Behind Portrait -->
+    <div class="absolute w-96 h-96 bg-[#a55768]/20 rounded-full 
+                blur-3xl top-1/3 left-1/2 -translate-x-1/2 -z-10"></div>
+
+    <!-- Floating Decorations -->
+    <div class="absolute text-4xl opacity-30 animate-float"
+         style="top:10%; left:15%;">🌹</div>
+
+    <div class="absolute text-3xl opacity-30 animate-float-delay"
+         style="bottom:15%; right:18%;">✨</div>
+
+    <!-- 👑 Royal Gold Frame -->
+    <div class="relative w-64 md:w-72 group animate-photoFloat mt-6">
+
+        <!-- Soft Gold Glow -->
+        <div class="absolute inset-0 rounded-[2rem] 
+                    bg-gradient-to-br from-[#d4af37]/40 via-transparent to-[#b8860b]/40 
+                    blur-2xl scale-110 opacity-60 
+                    group-hover:opacity-90 transition duration-700 -z-10"></div>
+
+        <!-- Outer Gold Frame -->
+        <div class="relative p-[10px] rounded-[2rem] 
+                    bg-gradient-to-br from-[#f8e7b0] via-[#d4af37] to-[#b8860b]
+                    shadow-[0_20px_60px_rgba(165,87,104,0.35)]
+                    transition-all duration-700">
+
+            <!-- Inner Shimmer -->
+            <div class="p-[6px] rounded-[1.7rem] 
+                        bg-gradient-to-tr from-[#fff6d5] via-[#e6c76b] to-[#c9a227]
+                        animate-goldShimmer">
+
+                <!-- Image -->
+                <div class="rounded-[1.5rem] overflow-hidden 
+                            border-4 border-[#f5deb3]/80">
+
+                    <img src="jai.jfif"
+                         alt="Royal Portrait"
+                         class="w-full h-72 md:h-80 object-cover 
+                                transition-transform duration-700 
+                                group-hover:scale-105 
+                                group-hover:brightness-105"
+                         id="herPhoto">
+                </div>
+            </div>
         </div>
-        <!-- Soft glow -->
-        <div class="absolute inset-0 rounded-2xl bg-gradient-to-t from-[#a55768]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+        <!-- Decorative Corners -->
+        <div class="absolute -top-3 -left-3 text-xl text-[#d4af37]">✦</div>
+        <div class="absolute -top-3 -right-3 text-xl text-[#d4af37]">✦</div>
+        <div class="absolute -bottom-3 -left-3 text-xl text-[#d4af37]">✦</div>
+        <div class="absolute -bottom-3 -right-3 text-xl text-[#d4af37]">✦</div>
+
     </div>
-    
-    <!-- Name with original styling -->
-    <h2 id="herName" 
-        class="mt-8 text-3xl md:text-4xl elegant-serif name-elegant px-5 py-2 bg-white/20 backdrop-blur-sm rounded-xl border border-white/40">
+
+    <!-- 👑 Name -->
+    <h2 class="mt-10 text-3xl md:text-4xl elegant-serif 
+               text-[#a55768] tracking-wide relative">
+
         Jai Jai
+
+        <!-- Gold Accent Line -->
+        <span class="block h-[2px] w-20 mx-auto mt-3 
+                     bg-gradient-to-r from-transparent 
+                     via-[#d4af37] to-transparent"></span>
     </h2>
-    
-    <!-- Valentine message with original color -->
-    <p class="text-[#a55768] mt-4 text-base tracking-widest elegant-caption handwritten">
+
+    <!-- Romantic Caption -->
+    <p class="mt-4 text-sm tracking-widest 
+              text-[#a55768] elegant-caption handwritten">
         Happy Valentine's Day
     </p>
-    
-    <!-- Simple hearts as original -->
-    <div class="absolute bottom-16 right-8 text-5xl opacity-20 animate-pulse">💕</div>
-    <div class="absolute bottom-20 left-8 handwritten text-xl text-rose-400/70 italic">
+
+    <!-- Signature -->
+    <div class="absolute bottom-16 left-10 
+                handwritten text-lg text-[#a55768]/70 italic">
         yours,
     </div>
+
 </section>
 
+
 <style>
+/* Floating animation */
 @keyframes float {
-    0%, 100% { transform: translateY(0px); }
+    0%,100% { transform: translateY(0px); }
     50% { transform: translateY(-15px); }
 }
 
 @keyframes float-delay {
-    0%, 100% { transform: translateY(0px); }
+    0%,100% { transform: translateY(0px); }
     50% { transform: translateY(-15px); }
 }
 
@@ -750,28 +800,46 @@
 }
 
 .animate-float-delay {
-    animation: float 6s ease-in-out 3s infinite;
+    animation: float-delay 6s ease-in-out 3s infinite;
 }
 
-/* Original font styles preserved */
+/* Gold shimmer animation */
+@keyframes goldShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.animate-goldShimmer {
+    background-size: 200% 200%;
+    animation: goldShimmer 6s ease infinite;
+}
+
+/* Cinematic floating portrait */
+@keyframes photoFloat {
+    0%,100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.animate-photoFloat {
+    animation: photoFloat 6s ease-in-out infinite;
+}
+
+/* Fonts */
 .elegant-serif {
     font-family: 'Playfair Display', 'Times New Roman', serif;
-    letter-spacing: 0.05em;
 }
 
 .handwritten {
-    font-family: 'Caveat', 'Bradley Hand', cursive;
-}
-
-.name-elegant {
-    font-weight: 600;
-    color: #4a3b3d;
+    font-family: 'Caveat', cursive;
 }
 
 .elegant-caption {
     font-weight: 300;
     text-transform: uppercase;
 }
+
+
 </style>
 
     <audio id="bgMusic" loop>
@@ -987,6 +1055,7 @@ for (let i = 0; i < 42; i++) {
   -->
 </body>
 </html>
+
 
 
 

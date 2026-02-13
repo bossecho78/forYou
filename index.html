@@ -399,11 +399,24 @@
       backdrop-filter: blur(6px);
       border: 1px solid #ffc2ce;
     }
+
+    .gift-hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+.hidden-until-unlock {
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  pointer-events: none;
+}
+
   </style>
 </head>
 <body id="mainBody" class="text-[#3e262a] snap-y snap-mandatory">
 
-  <div id="nowPlaying"
+<div id="nowPlaying"
      class="fixed top-4 left-4 z-[999]
             px-5 py-2.5 rounded-full
             bg-gradient-to-r from-white/50 to-pink-100/40
@@ -415,6 +428,7 @@
             hover:scale-105">
   🎵 Not playing
 </div>
+
 
 
   <!-- 🌸 FLOATING BLOOM CANVASES (one per section, dynamically placed) -->
@@ -496,7 +510,7 @@
 
   <!-- 💌 SCROLL HINT -->
   <div id="scrollHint" class="scroll-hint hidden opacity-0">
-    ↓ Scroll down ↓
+    ↓ scroll — down ↓
   </div>
 
   <!-- 🎁 SECTION 1 – GIFT -->
@@ -504,12 +518,25 @@
     <div class="absolute left-2 top-2 text-5xl opacity-10 floating-symbol">🌸</div>
     <div class="absolute right-4 bottom-20 text-5xl opacity-10 floating-symbol">💗</div>
     
-    <h1 class="text-sm tracking-[0.45em] uppercase text-[#8f4152] mb-8 z-50 bg-white/30 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/50 shadow-md">
-      for you, always
-    </h1>
+    
+  <h1 id="topLabel"
+    class="hidden-until-unlock text-sm tracking-[0.45em] uppercase text-[#8f4152] mb-8 z-50 bg-white/30 backdrop-blur-sm px-5 py-2.5 rounded-full border border-white/50 shadow-md">
+  for you, always
+</h1>
+
+
+<div id="countdown"
+     class="mt-6 text-sm tracking-widest text-[#8f4152] bg-gradient-to-r from-pink-100/60 via-white/40 to-rose-100/60 
+            backdrop-blur-sm px-5 py-3 rounded-full border border-white/50 shadow-lg 
+            flex items-center justify-center font-semibold animate-pulse">
+  🎁 Unlocking in...
+</div>
+
+
 
     <!-- GIFT 3D -->
-    <div id="giftContainer" class="gift-container relative z-50">
+    <div id="giftContainer" class="gift-container gift-hidden relative z-50">
+
       <div class="box-3d" id="box3d">
         <div id="boxLid" class="box-lid">
           <div class="ribbon-bow"></div>
@@ -842,7 +869,7 @@
 
 </style>
 
-    <audio id="bgMusic" loop>
+<audio id="bgMusic" loop>
   <source src="isalang.mp3" type="audio/mpeg">
 </audio>
 
@@ -859,11 +886,12 @@
     nowPlaying.style.opacity = "0"; // fade out first
 
     setTimeout(() => {
-      nowPlaying.innerHTML = "🎵 Now Playing: Isa lang - Arthur nery ❤️";
+      nowPlaying.innerHTML = "🎵 Now Playing: Your Song ❤️";
       nowPlaying.style.opacity = "1"; // fade back in
     }, 250);
   }, { once: true });
 </script>
+
 
 
 <script>
@@ -1046,6 +1074,70 @@ for (let i = 0; i < 42; i++) {
 
   window.addEventListener('load', createSectionBlooms);
 })();
+
+(function() {
+
+  const gift = document.getElementById("giftContainer");
+  const countdown = document.getElementById("countdown");
+  const label = document.getElementById("topLabel"); // ← NEW
+
+  /* 🕒 SET UNLOCK DATE */
+// Feb 14, 2026 at 8:00 PM Philippine Time (UTC+8)
+const unlockDate = new Date("2026-02-14T00:00:00+08:00").getTime();
+
+/* 🕒 SET UNLOCK TIMER (10 seconds) testing purposes */
+//const unlockDate = Date.now() + (10 * 1000);
+
+
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = unlockDate - now;
+
+    if (diff <= 0) {
+
+      /* 🎁 SHOW GIFT */
+      gift.classList.remove("gift-hidden");
+
+      /* 💌 SHOW HEADER LABEL */
+      if (label) label.classList.remove("hidden-until-unlock");
+
+      /* animate appearance */
+      [gift, label].forEach(el => {
+        if (!el) return;
+
+        el.style.transition = "all 0.9s cubic-bezier(0.34, 1.6, 0.64, 1)";
+        el.style.opacity = "1";
+        el.style.transform = "translateY(0) scale(1)";
+      });
+
+      /* optional staged reveal (looks very nice) */
+      if (label) label.style.transitionDelay = "0.15s";
+      gift.style.transitionDelay = "0.3s";
+
+      /* hide countdown */
+      countdown.style.transition = "opacity 0.5s ease";
+      countdown.style.opacity = "0";
+
+      setTimeout(() => countdown.remove(), 500);
+
+      clearInterval(timer);
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+    const seconds = Math.floor((diff / 1000) % 60);
+
+    countdown.innerHTML =
+      `🎁 Unlocking in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+
+})();
+
 </script>
 
 
@@ -1055,10 +1147,3 @@ for (let i = 0; i < 42; i++) {
   -->
 </body>
 </html>
-
-
-
-
-
-
-
